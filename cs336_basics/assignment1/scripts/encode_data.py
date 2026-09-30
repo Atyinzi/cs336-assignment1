@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from cs336_basics.tokenizer import Tokenizer
+from ..tokenizer import Tokenizer
 
 
 def open_text(path: Path):

@@ -7,8 +7,8 @@ import pickle
 
 import torch
 
-from cs336_basics.fullLM import TransformerLM
-from cs336_basics.tokenizer import Tokenizer
+from ..fullLM import TransformerLM
+from ..tokenizer import Tokenizer
 
 
 def sample_next_token(logits: torch.Tensor, temperature: float = 1.0, top_p: float = 1.0) -> int:

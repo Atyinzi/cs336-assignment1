@@ -9,7 +9,7 @@ from pathlib import Path
 
 import psutil
 
-from cs336_basics.train_bpe import train_bpe
+from ..train_bpe import train_bpe
 
 
 INPUT_PATH = Path("data/TinyStoriesV2-GPT4-train.txt")

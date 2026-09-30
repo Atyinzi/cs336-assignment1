@@ -2,8 +2,8 @@
 import torch
 from torch import nn
 
-from cs336_basics.linear import Linear
-from cs336_basics.pre_norm_block import RotaryPositionalEmbedding
+from .linear import Linear
+from .pre_norm_block import RotaryPositionalEmbedding
 
 
 def softmax(x: torch.Tensor, dim: int) -> torch.Tensor:

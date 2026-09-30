@@ -2,9 +2,9 @@
 import torch
 from torch import nn
 
-from cs336_basics.linear import Embedding, Linear
-from cs336_basics.pre_norm_block import RMSNorm, SwiGLU
-from cs336_basics.softmax import CausalMultiHeadSelfAttentionWithRoPE
+from .linear import Embedding, Linear
+from .pre_norm_block import RMSNorm, SwiGLU
+from .softmax import CausalMultiHeadSelfAttentionWithRoPE
 
 ###此fullLM还需要二次训练
 class TransformerBlock(nn.Module):

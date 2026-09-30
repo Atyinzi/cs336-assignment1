@@ -30,7 +30,7 @@ def run_linear(
     Returns:
         Float[Tensor, "... d_out"]: The transformed output of your linear module.
     """
-    from cs336_basics.linear import Linear
+    from cs336_basics.assignment1.linear import Linear
     linear = Linear(d_in, d_out)
     with torch.no_grad():
         linear.load_state_dict({"W": weights}) 
@@ -56,7 +56,7 @@ def run_embedding(
     Returns:
         Float[Tensor, "... d_model"]: Batch of embeddings returned by your Embedding layer.
     """
-    from cs336_basics.linear import Embedding
+    from cs336_basics.assignment1.linear import Embedding
     embedding=Embedding(vocab_size, d_model)
     with torch.no_grad():
         embedding.load_state_dict({"embedding_martix":weights})
@@ -92,7 +92,7 @@ def run_swiglu(
     # swiglu.w1.weight.data = w1_weight
     # swiglu.w2.weight.data = w2_weight
     # swiglu.w3.weight.data = w3_weight
-    from cs336_basics.pre_norm_block import SwiGLU
+    from cs336_basics.assignment1.pre_norm_block import SwiGLU
     swiglu = SwiGLU(d_model,d_ff)
     swiglu.load_state_dict({
         "w1.W": w1_weight,   # 键名取决于你的 Linear 类里参数名
@@ -120,7 +120,7 @@ def run_scaled_dot_product_attention(
     Returns:
         Float[Tensor, " ... queries d_v"]: Output of SDPA
     """
-    from cs336_basics.softmax import scaled_dot_product_attention
+    from cs336_basics.assignment1.softmax import scaled_dot_product_attention
     return scaled_dot_product_attention(Q,K,V,mask)
 
 
@@ -155,7 +155,7 @@ def run_multihead_self_attention(
         Float[Tensor, " ... sequence_length d_model"]: Tensor with the output of running your optimized, batched multi-headed attention
         implementation with the given QKV projection weights and input features.
     """
-    from cs336_basics.softmax import CausalMultiHeadSelfAttention
+    from cs336_basics.assignment1.softmax import CausalMultiHeadSelfAttention
 
     attention = CausalMultiHeadSelfAttention(d_model, num_heads)
     attention.load_state_dict(
@@ -206,7 +206,7 @@ def run_multihead_self_attention_with_rope(
         Float[Tensor, " ... sequence_length d_model"]: Tensor with the output of running your optimized, batched multi-headed attention
         implementation with the given QKV projection weights and input features.
     """
-    from cs336_basics.softmax import CausalMultiHeadSelfAttentionWithRoPE
+    from cs336_basics.assignment1.softmax import CausalMultiHeadSelfAttentionWithRoPE
 
     attention = CausalMultiHeadSelfAttentionWithRoPE(
         d_model=d_model,
@@ -244,7 +244,7 @@ def run_rope(
     Returns:
         Float[Tensor, " ... sequence_length d_k"]: Tensor with RoPEd input.
     """
-    from cs336_basics.pre_norm_block import RotaryPositionalEmbedding
+    from cs336_basics.assignment1.pre_norm_block import RotaryPositionalEmbedding
 
     rope = RotaryPositionalEmbedding(theta=theta, d_k=d_k, max_seq_len=max_seq_len, device=in_query_or_key.device)
     return rope(in_query_or_key, token_positions)
@@ -320,7 +320,7 @@ def run_transformer_block(
         Float[Tensor, "batch sequence_length d_model"] Tensor with the output of
         running the Transformer block on the input features while using RoPE.
     """
-    from cs336_basics.fullLM import TransformerBlock
+    from cs336_basics.assignment1.fullLM import TransformerBlock
 
     block = TransformerBlock(d_model, num_heads, d_ff, max_seq_len, theta)
     block.load_state_dict(
@@ -418,7 +418,7 @@ def run_transformer_lm(
         Float[Tensor, "batch_size sequence_length vocab_size"]: Tensor with the predicted unnormalized
         next-word distribution for each token.
     """
-    from cs336_basics.fullLM import TransformerLM
+    from cs336_basics.assignment1.fullLM import TransformerLM
 
     model = TransformerLM(
         vocab_size,
@@ -474,7 +474,7 @@ def run_rmsnorm(
         Float[Tensor,"... d_model"]: Tensor of with the same shape as `in_features` with the output of running
         RMSNorm of the `in_features`.
     """
-    from cs336_basics.pre_norm_block import RMSNorm
+    from cs336_basics.assignment1.pre_norm_block import RMSNorm
     rmsnorm = RMSNorm(d_model, eps)
     with torch.no_grad():
         rmsnorm.load_state_dict({"g":weights})
@@ -492,7 +492,7 @@ def run_silu(in_features: Float[Tensor, " ..."]) -> Float[Tensor, " ..."]:
         Float[Tensor,"..."]: of with the same shape as `in_features` with the output of applying
         SiLU to each element.
     """
-    from cs336_basics.pre_norm_block import silu
+    from cs336_basics.assignment1.pre_norm_block import silu
 
     return silu(in_features)
 
@@ -517,7 +517,7 @@ def run_get_batch(
         is the sampled input sequences, and the second tuple item is the corresponding
         language modeling labels.
     """
-    from cs336_basics.traningloop import get_batch
+    from cs336_basics.assignment1.traningloop import get_batch
 
     return get_batch(
             dataset=dataset,
@@ -540,7 +540,7 @@ def run_softmax(in_features: Float[Tensor, " ..."], dim: int) -> Float[Tensor, "
         Float[Tensor, "..."]: Tensor of with the same shape as `in_features` with the output of
         softmax normalizing the specified `dim`.
     """
-    from cs336_basics.softmax import softmax
+    from cs336_basics.assignment1.softmax import softmax
     return softmax(in_features, dim)
 
 
@@ -559,7 +559,7 @@ def run_cross_entropy(
     Returns:
         Float[Tensor, ""]: The average cross-entropy loss across examples.
     """
-    from cs336_basics.utils import cross_entropy
+    from cs336_basics.assignment1.utils import cross_entropy
     return cross_entropy(inputs, targets)
 
 
@@ -572,21 +572,16 @@ def run_gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm:
 
     The gradients of the parameters (parameter.grad) should be modified in-place.
     """
-    from cs336_basics.traningloop import get_batch
+    from cs336_basics.assignment1.utils import gradient_clipping
 
-    return get_batch(
-        dataset=dataset,
-        batch_size=batch_size,
-        context_length=context_length,
-        device=device,
-    )
+    gradient_clipping(parameters, max_l2_norm)
 
 
 def get_adamw_cls() -> Any:
     """
     Returns a torch.optim.Optimizer that implements AdamW.
     """
-    from cs336_basics.utils import AdamW
+    from cs336_basics.assignment1.utils import AdamW
 
     return AdamW
 
@@ -616,7 +611,7 @@ def run_get_lr_cosine_schedule(
     Returns:
         Learning rate at the given iteration under the specified schedule.
     """
-    from cs336_basics.utils import get_lr_cosine_schedule
+    from cs336_basics.assignment1.utils import get_lr_cosine_schedule
 
     return get_lr_cosine_schedule(
         it,
@@ -643,7 +638,7 @@ def run_save_checkpoint(
             we've completed.
         out (str | os.PathLike | BinaryIO | IO[bytes]): Path or file-like object to serialize the model, optimizer, and iteration to.
     """
-    from cs336_basics.traningloop import save_checkpoint
+    from cs336_basics.assignment1.traningloop import save_checkpoint
     return save_checkpoint(model,optimizer,iteration,out)
 
 
@@ -665,7 +660,7 @@ def run_load_checkpoint(
     Returns:
         int: the previously-serialized number of iterations.
     """
-    from cs336_basics.traningingloop import load_checkpoint
+    from cs336_basics.assignment1.traningloop import load_checkpoint
     return load_checkpoint(src, model, optimizer)
 
 
@@ -689,7 +684,7 @@ def get_tokenizer(
     Returns:
         A BPE tokenizer that uses the provided vocab, merges, and special tokens.
     """
-    from cs336_basics.tokenizer import Tokenizer
+    from cs336_basics.assignment1.tokenizer import Tokenizer
 
     return Tokenizer(vocab=vocab, merges=merges, special_tokens=special_tokens)
 
@@ -721,6 +716,6 @@ def run_train_bpe(
                 representing that <token1> was merged with <token2>.
                 Merges are ordered by order of creation.
     """
-    from cs336_basics.train_bpe import train_bpe
+    from cs336_basics.assignment1.train_bpe import train_bpe
 
     return train_bpe(input_path=input_path, vocab_size=vocab_size, special_tokens=special_tokens)

@@ -5,8 +5,8 @@ import argparse
 import os
 from typing import BinaryIO, IO
 
-from cs336_basics.fullLM import TransformerLM
-from cs336_basics.utils import AdamW, cross_entropy, gradient_clipping, get_lr_cosine_schedule
+from .fullLM import TransformerLM
+from .utils import AdamW, cross_entropy, gradient_clipping, get_lr_cosine_schedule
 
 def get_batch(
     dataset: np.ndarray,

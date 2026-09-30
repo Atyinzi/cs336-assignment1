@@ -2,7 +2,7 @@
 import torch
 from torch import nn
 
-from cs336_basics.linear import Linear
+from .linear import Linear
 
 class RMSNorm(nn.Module):
     def __init__(

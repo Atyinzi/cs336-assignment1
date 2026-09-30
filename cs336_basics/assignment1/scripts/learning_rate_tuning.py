@@ -1,7 +1,7 @@
 # 学习率实验脚本：用于比较不同学习率配置对训练过程的影响。
 import torch
 
-from cs336_basics.utils import SGD
+from ..utils import SGD
 
 
 # 三组实验使用完全相同的初始参数，方便公平比较。
