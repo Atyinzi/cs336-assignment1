@@ -17,17 +17,20 @@ SDPA/Triton attention、DDP 梯度分桶、ZeRO-1、FSDP、通信重叠、分片
 
 | 项目 | 结果 |
 |---|---:|
-| 完成训练步数 | 6000 |
-| 5000-step loss EMA | 2.3881 |
+| 完成训练步数 | 12000 |
 | 6000-step loss EMA | 2.3163 |
-| 固定 10 个验证片段：5000-step loss | 2.5538 |
-| 固定 10 个验证片段：6000-step loss | 2.4901 |
-| 5000→6000 相同配置验证 loss 改善 | 约 2.5% |
-| 最后 100 步平均吞吐 | 约 1091 tokens/s |
+| 9000-step loss EMA | 2.1384 |
+| 12000-step loss EMA | 2.0238 |
+| 固定 10 个验证片段：6000-step loss | 2.4902 |
+| 固定 10 个验证片段：9000-step loss | 2.2836 |
+| 固定 10 个验证片段：12000-step loss | 2.2235 |
+| 6000→12000 相同配置验证 loss 改善 | 约 10.7% |
 | 训练峰值显存 | 约 2.97 GiB allocated |
 
-当前推荐 checkpoint 是本地的 `results/minitrain_step6000.pt`。checkpoint 约 1.5GB，包含
-FP32 参数与 AdamW 状态，因此不提交到 Git。
+当前推荐 checkpoint 是本地的 `results/minitrain_step12000.pt`。checkpoint 约 1.5GB，包含
+FP32 参数与 AdamW 状态，因此不提交到 Git。第 9000 和 12000 步的逐步训练记录分别见
+[minitrain_step9000.jsonl](./results/minitrain_step9000.jsonl) 和
+[minitrain_step12000.jsonl](./results/minitrain_step12000.jsonl)。
 
 ### Attention 后端实测
 
@@ -135,14 +138,15 @@ uv run python scripts/minitrain.py \
   --device cuda
 ```
 
-这是从头训练的参考命令；已有 6000 步结果来自先训练到 5000 步，再恢复 1000 步。
+这是从头训练到 6000 步的参考命令；已有 12000 步结果来自先训练到 5000 步、
+恢复 1000 步，再从 6000 和 9000 步检查点各续训 3000 步。
 随机数消耗顺序、PyTorch 版本与运行环境可能导致重新运行的曲线略有差异。
 
-### 从 6000-step checkpoint 生成文本
+### 从 12000-step checkpoint 生成文本
 
 ```bash
 uv run python scripts/minitrain_inference.py \
-  --checkpoint results/minitrain_step6000.pt \
+  --checkpoint results/minitrain_step12000.pt \
   --tokenizer ../artifacts/tinystories_bpe_10000/tokenizer.pkl \
   --prompt "Once upon a time, there was a little dragon" \
   --max-new-tokens 100 \
@@ -153,7 +157,8 @@ uv run python scripts/minitrain_inference.py \
   --device cuda
 ```
 
-一次真实输出：
+以下是 **6000-step** 检查点使用提示词 `Once upon a time, there was a little`
+得到的真实输出；它不是上面 12000-step 命令的输出：
 
 > Once upon a time, there was a little girl named Amy. Amy loved to play in the yard. One day,
 > she found a big, icy tree in the yard...
@@ -179,13 +184,15 @@ uv run python scripts/minitrain.py \
   --cosine-lr \
   --attention-backend sdpa \
   --mixed-precision \
-  --resume results/minitrain_step6000.pt \
-  --output results/minitrain_step7000.pt \
-  --log-file results/minitrain_step7000.jsonl \
+  --resume results/minitrain_step12000.pt \
+  --output results/minitrain_step13000.pt \
+  --log-file results/minitrain_step13000.jsonl \
   --device cuda
 ```
 
-继续训练不是项目完成的必要条件。应根据固定验证集 loss 决定是否继续，而不是只看训练步数。
+这里的 `--steps 1000` 表示从 12000 再训练 1000 步；沿用 `--lr-decay-steps 10000`
+时，学习率保持在最小值 `3e-5`。继续训练不是项目完成的必要条件，应根据固定验证集
+loss 决定是否继续，而不是只看训练步数。
 
 ## 分布式策略
 
@@ -236,7 +243,7 @@ step time、tokens/s、暴露通信时间、峰值显存和每 rank 状态大小
 
 以下结论经过本机实测：
 
-- RTX 3050 上的 6000-step TinyStories 训练、断点恢复、验证和生成；
+- RTX 3050 上的 12000-step TinyStories 训练、断点恢复与验证；6000-step 检查点的文本生成；
 - naive、SDPA、Triton attention 的单卡性能；
 - Triton attention forward/backward 数值测试；
 - CPU/Gloo 两进程下 DDP、共享权重、ZeRO-1、FSDP FP32/FP16、checkpoint round-trip。
