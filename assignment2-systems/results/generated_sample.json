@@ -1,0 +1,9 @@
+{
+  "checkpoint": "results/minitrain_convergence.pt",
+  "step": 5000,
+  "device": "cuda",
+  "attention_backend": "naive",
+  "prompt": "Once upon a time, there was a little",
+  "generated_text": "Once upon a time, there was a little girl named Sue. Sue loved to play with her toys in the sand. One day, her mom asked her to clean the cupboard. \"Can I play on the table, Sue?\" Sue said, \"Yes, you can.\"\nSue went to",
+  "token_count": 59
+}

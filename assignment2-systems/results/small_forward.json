@@ -1,0 +1,24 @@
+{
+  "configuration": {
+    "model_size": "small",
+    "context_length": 128,
+    "batch_size": 1,
+    "vocab_size": 10000,
+    "mode": "forward",
+    "warmup": 5,
+    "steps": 10,
+    "mixed_precision": false,
+    "compile": false,
+    "memory_snapshot": null,
+    "output": "results/small_forward.json",
+    "device": "NVIDIA GeForce RTX 3050 Laptop GPU"
+  },
+  "timings": {
+    "forward_ms": {
+      "mean_ms": 28.51509389999478,
+      "std_ms": 2.9243000782292667
+    }
+  },
+  "peak_allocated_mib": 677.53369140625,
+  "peak_reserved_mib": 690.0
+}

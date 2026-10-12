@@ -1,0 +1,7 @@
+{
+  "checkpoint": "results/minitrain_convergence.pt",
+  "step": 5000,
+  "device": "cuda",
+  "attention_backend": "naive",
+  "validation_loss": 2.5537667274475098
+}

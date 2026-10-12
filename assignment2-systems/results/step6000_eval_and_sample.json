@@ -1,0 +1,10 @@
+{
+  "checkpoint": "results/minitrain_step6000.pt",
+  "step": 6000,
+  "device": "cuda",
+  "attention_backend": "sdpa",
+  "validation_loss": 2.490072011947632,
+  "prompt": "Once upon a time, there was a little",
+  "generated_text": "Once upon a time, there was a little girl named Amy. Amy loved to play in the yard. One day, she found a big, icy tree in the yard. It was a pretty star. The moon was red and blue. Amy was very happy to see the sun and the trees",
+  "token_count": 59
+}

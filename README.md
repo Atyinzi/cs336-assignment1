@@ -1,4 +1,15 @@
-# CS336 Spring 2025 Assignment 1: Basics
+# CS336: Assignment 1 + MiniTrain (Assignment 2)
+
+本仓库包含两部分：根目录是 Assignment 1 的模型、tokenizer 与训练实现；
+[assignment2-systems](./assignment2-systems/README.md) 是在此基础上扩展的 MiniTrain 系统项目，
+包含单卡训练、注意力后端对比、DDP、ZeRO-1、教学版 FSDP、checkpoint 与文本生成。
+
+MiniTrain 已在 RTX 3050 Laptop GPU 上训练 TinyStories 至 6000 步，
+并提供[实验结果与复现命令](./assignment2-systems/README.md)。
+数据集与大型 checkpoint 不存放在 Git 仓库；小型实验日志保存在
+`assignment2-systems/results/`。
+
+## Assignment 1 原始说明
 
 For a full description of the assignment, see the assignment handout at
 [cs336_assignment1_basics.pdf](./cs336_assignment1_basics.pdf)
@@ -26,9 +37,7 @@ and the environment will be automatically solved and activated when necessary.
 uv run pytest
 ```
 
-Initially, all tests should fail with `NotImplementedError`s.
-To connect your implementation to the tests, complete the
-functions in [./tests/adapters.py](./tests/adapters.py).
+Assignment 1 的实现与测试适配器已在本仓库完成；可直接运行上面的测试命令。
 
 ### Download data
 Download the TinyStories data and a subsample of OpenWebText

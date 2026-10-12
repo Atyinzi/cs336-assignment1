@@ -1,0 +1,38 @@
+{
+  "configuration": {
+    "model_size": "small",
+    "context_length": 128,
+    "batch_size": 1,
+    "vocab_size": 10000,
+    "mode": "train",
+    "warmup": 5,
+    "steps": 20,
+    "mixed_precision": true,
+    "attention_backend": "sdpa",
+    "compile": false,
+    "memory_snapshot": null,
+    "output": "results/benchmark_sdpa_ctx128.json",
+    "device": "NVIDIA GeForce RTX 3050 Laptop GPU"
+  },
+  "timings": {
+    "forward_ms": {
+      "mean_ms": 31.611181150219636,
+      "std_ms": 5.134685567357628
+    },
+    "backward_ms": {
+      "mean_ms": 47.324501349976344,
+      "std_ms": 8.162981684753893
+    },
+    "optimizer_ms": {
+      "mean_ms": 60.953823900490534,
+      "std_ms": 1.0103789923719564
+    }
+  },
+  "total_step_ms": {
+    "mean_ms": 139.8895064006865,
+    "std_ms": 11.301583787379833
+  },
+  "tokens_per_second": 915.0078750965687,
+  "peak_allocated_mib": 2478.14990234375,
+  "peak_reserved_mib": 2822.0
+}

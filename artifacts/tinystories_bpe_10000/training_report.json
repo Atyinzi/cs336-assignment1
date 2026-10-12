@@ -1,0 +1,45 @@
+{
+  "dataset": "E:\\cs336study\\assignment1-basics-main\\data\\TinyStoriesV2-GPT4-train.txt",
+  "vocab_size": 10000,
+  "number_of_merges": 9743,
+  "elapsed_seconds": 976.3874403999944,
+  "elapsed_minutes": 16.273124006666574,
+  "peak_rss_gib": 10.601451873779297,
+  "peak_rss_above_baseline_gib": 10.577335357666016,
+  "longest_token_length_bytes": 15,
+  "longest_tokens": [
+    {
+      "id": 7160,
+      "bytes": "b' accomplishment'",
+      "text": " accomplishment"
+    },
+    {
+      "id": 9143,
+      "bytes": "b' disappointment'",
+      "text": " disappointment"
+    },
+    {
+      "id": 9379,
+      "bytes": "b' responsibility'",
+      "text": " responsibility"
+    }
+  ],
+  "longest_learned_token_length_bytes": 15,
+  "longest_learned_tokens": [
+    {
+      "id": 7160,
+      "bytes": "b' accomplishment'",
+      "text": " accomplishment"
+    },
+    {
+      "id": 9143,
+      "bytes": "b' disappointment'",
+      "text": " disappointment"
+    },
+    {
+      "id": 9379,
+      "bytes": "b' responsibility'",
+      "text": " responsibility"
+    }
+  ]
+}
